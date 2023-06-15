@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Devices{% endblock title %}
+
+{% block content %}
+<div>
+  <p><a class="btn btn-primary btn-lg" href="{% url 'device_new' %}" role="button">Add devices</a></p>
+  {% for device in device_list %}
+  <div class="card">
+    <div class="card-header">
+      <span class="fw-bold">
+        <a href="{{ device.get_absolute_url }}">{{ device.ip_address }}</a>
+      </span>
+    </div>
+    <div class="card-body">
+      {{ device.name }}
+    </div>
+    
+    
+  </div>
+  <br />
+  {% endfor %}
+</div>
+
+{% endblock content %}
