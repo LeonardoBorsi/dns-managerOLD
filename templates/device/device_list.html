@@ -1,25 +1,49 @@
 {% extends "base.html" %}
-
+{% load bootstrap_icons %}
 {% block title %}Devices{% endblock title %}
-
 {% block content %}
 <div>
-  <p><a class="btn btn-primary btn-lg" href="{% url 'device_new' %}" role="button">Add devices</a></p>
-  {% for device in device_list %}
-  <div class="card">
-    <div class="card-header">
-      <span class="fw-bold">
-        <a href="{{ device.get_absolute_url }}">{{ device.ip_address }}</a>
-      </span>
-    </div>
-    <div class="card-body">
-      {{ device.name }}
-    </div>
-    
-    
+  <div class="toolbar">
+    <span class="title">Your devices</span>
+    <a class="transparent-button" href="{% url 'device_new' %}" role="button">
+      {% bs_icon 'plus-lg' size='16px' extra_classes="start-button-icon" %}
+      <span class="button-text">add device</span>
+    </a>
   </div>
-  <br />
-  {% endfor %}
+  <div class="container px">
+    {% for device in device_list %}
+      <button class="list-item-button row" onclick="location.href='{{ device.get_absolute_url }}'">
+        <div class="col list-col justify-start">
+          {{ device.name }}
+        </div>
+        <div class="col list-col justify-start">
+          {{ device.ip_address }}
+        </div>
+        <div class="col list-col justify-center">
+          {% if device.accepted is None %}
+            {% bs_icon 'hourglass-top' size='14px' extra_classes="pending-icon" %}
+            <span class="text-pending">Pending</span>
+          {% else %}
+            {% if device.accepted %}
+              {% bs_icon 'check-circle-fill' size='14px' extra_classes="accepted-icon" %}
+              <span class="text-accepted">Accepted</span>
+            {% else %}
+              {% bs_icon 'x-circle-fill' size='14px' extra_classes="rejected-icon" %}
+              <span class="text-rejected">Rejected</span>
+            {% endif %}
+          {% endif %}
+        </div>
+        <div class="col list-col justify-end">
+          <a class="icon-button" href="{% url 'device_edit' device.pk %}" role="button" style="margin-right: 10px;">
+            {% bs_icon 'pencil-fill' size='16px' extra_classes="button-icon" %}
+          </a>
+          <a class="icon-button" href="{% url 'device_delete' device.pk %}" role="button">
+            {% bs_icon 'trash3-fill' size='16px' extra_classes="button-icon" %}
+          </a>
+        </div>
+      </button>
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock content %}

@@ -1,0 +1,96 @@
+.img-bg { 
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(to right top, #08082c, #0c1c5c, #1c2c90, #353bc7, #5649ff);  position:fixed;
+  overflow-y:scroll;
+  overflow-x:hidden;
+}
+
+.app-bg {
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.blurred-container {
+  height: 90vh;
+  max-height: 90vh;
+  width: 95vw;
+  background-color: rgba(51,51,51, 0.4);   
+  backdrop-filter: blur(50px);
+  background-blend-mode: overlay;
+  box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 0.5px solid rgb(255 255 255 / 15%);
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+}
+
+.menu {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-title-1 {
+  margin-left: 7px;
+  font-size: 30;
+  font-weight: 600;
+  color: white
+}
+
+.menu-title-2 {
+  font-weight: 300;
+}
+
+.home-button {
+  padding-left: 10px !important;
+}
+
+.menu-icon {
+  color: white;
+  margin-right: 10px;
+}
+
+.menu-profile {
+  font-size: 20;
+  font-weight: 400;
+  color: white
+}
+
+.content {
+  max-height: -webkit-calc(100% - 70px);
+  max-height: -moz-calc(100% - 70px);
+  max-height: (100% - 70px);
+  overflow-y: scroll;
+}
+
+.transparent-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  text-decoration: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 100px;
+  transition: background-color 0.2s ease;
+}
+
+.transparent-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);   
+}
+
+.dropdown-icon {
+  color: white;
+  margin-left: 15px;
+}

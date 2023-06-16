@@ -1,14 +1,32 @@
 {% extends "base.html" %}
-
+{% load bootstrap_icons %}
+{% block title %}Device Detail{% endblock title %}
 {% block content %}
 <div>
-  <h2>{{ object.ip_address }}</h2>
-  <p>{{ object.name }}</p>
-  <p>Back to <a href="{% url 'device_list' %}">All Articles</a>.</p>
-
-  <p>
-    <a href="{% url 'device_edit' device.pk %}">Edit</a>
-    <a href="{% url 'device_delete' device.pk %}">Delete</a>
-  </p>
+  <div class="toolbar">
+    <div class="justify-start">
+      <a class="icon-button" href="{% url 'device_list' %}" role="button">
+        {% bs_icon 'arrow-left' size='20px' extra_classes="button-icon" %}
+      </a>
+      <span class="title" style="margin-left: 20px;">{{ object.name }}</span>
+    </div>
+    <div class="justify-end">
+      <a class="transparent-button" href="{% url 'device_edit' device.pk %}" role="button" style="margin-right: 10px;">
+        {% bs_icon 'pencil-fill' size='14px' extra_classes="start-button-icon" %}
+        <span class="button-text">edit device</span>
+      </a>
+      <a class="transparent-button" href="{% url 'device_delete' device.pk %}" role="button">
+        {% bs_icon 'trash3-fill' size='14px' extra_classes="start-button-icon" %}
+        <span class="button-text">delete device</span>
+      </a>
+    </div>
+  </div>
+  <div class="px">
+    <p>IP: {{ object.ip_address }}</p>
+    <p>status: {{ object.accepted }}</p>
+    
+  </div>
+  
+  
 </div>
 {% endblock content %}
