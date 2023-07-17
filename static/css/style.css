@@ -31,6 +31,39 @@
   padding-right: 10px;
 }
 
+.small-blurred-container {
+  height: 80vh;
+  max-height: 80vh;
+  width: 400px;
+  background-color: rgba(51,51,51, 0.4);   
+  backdrop-filter: blur(50px);
+  background-blend-mode: overlay;
+  box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 0.5px solid rgb(255 255 255 / 15%);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.small-menu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-buttons-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .menu {
   min-height: 70px;
   display: flex;
@@ -91,6 +124,8 @@
   padding-bottom: 10px;
   border-radius: 100px;
   color: white;
+  background-color: transparent;
+  border: none;
   transition: background-color 0.2s ease;
 }
 
@@ -118,6 +153,8 @@
   text-decoration: none;
   padding: 10px;
   border-radius: 100%;
+  background-color: transparent;
+  border-color: transparent;
   color: white;
   transition: background-color 0.2s ease;
 }
@@ -129,6 +166,38 @@
 
 .button-icon {
   color: white;
+}
+
+.primary-button {
+  text-align: center;
+  text-decoration: none;
+  width: 200px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 8px;
+  background-color: #5649FF;
+  transition: background-color 0.2s ease;
+}
+
+.primary-button:hover {
+  background-color: rgba(86, 73, 255, 0.7);   
+}
+
+.primary-button-text {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.or {
+  font-weight: 300;
+  margin-top: 20px;
+  margin-bottom: 20px
+}
+
+.version {
+  font-weight: 200;
+  font-size: 12px;
 }
 
 .toolbar {
@@ -150,6 +219,11 @@
   padding-right: 25px !important;
 }
 
+.py {
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+}
+
 .list-item-button {
   border-left: none;
   border-right: none;
@@ -162,6 +236,7 @@
   color: white;
   font-size: 15px;
   font-weight: 200;
+  margin: 0 !important;
 }
 
 .list-item-button:hover {
@@ -223,6 +298,13 @@
   margin-right: 7px;
 }
 
+.accepted-color {
+  color: #00C851;
+}
+
+.rejected-color {
+  color: #FF4444;
+}
 
 p {
   color: white;
@@ -230,4 +312,26 @@ p {
 
 span {
   color: white;
+}
+
+.ports{
+  margin-top: 30px;
+}
+
+.field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.fieldLabel {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 15px;
+}
+
+.fieldValue {
+  color: white;
+  font-size: 16px;
+  font-weight: 200;
 }

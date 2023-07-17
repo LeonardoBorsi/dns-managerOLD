@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap_icons %}
-{% block title %}Device Detail{% endblock title %}
+{% block title %} | Device Detail{% endblock title %}
 {% block content %}
 <div>
   <div class="toolbar">
@@ -10,23 +10,129 @@
       </a>
       <span class="title" style="margin-left: 20px;">{{ object.name }}</span>
     </div>
-    <div class="justify-end">
-      <a class="transparent-button" href="{% url 'device_edit' device.pk %}" role="button" style="margin-right: 10px;">
-        {% bs_icon 'pencil-fill' size='14px' extra_classes="start-button-icon" %}
-        <span class="button-text">edit device</span>
-      </a>
-      <a class="transparent-button" href="{% url 'device_delete' device.pk %}" role="button">
-        {% bs_icon 'trash3-fill' size='14px' extra_classes="start-button-icon" %}
-        <span class="button-text">delete device</span>
-      </a>
-    </div>
+    {% if user.is_superuser %}
+      <form method="POST">{% csrf_token %}
+        <div class="justify-end">
+          {% if object.accepted is None %}
+            <button type="submit" name="accept_button" class="transparent-button" style="margin-right: 10px;">
+              {% bs_icon 'check-circle-fill' size='14px' extra_classes="accepted-icon" %}
+              <span class="text-accepted">Accept</span>
+            </button>
+            <button type="submit" name="reject_button" class="transparent-button" style="margin-right: 10px;">
+              {% bs_icon 'x-circle-fill' size='14px' extra_classes="rejected-icon" %}
+              <span class="text-rejected">Reject</span>
+            </button>
+          {% endif %}
+        </div>
+      </form>
+    {% else %}
+      <div class="justify-end">
+        {% if object.accepted is None %}
+          <a class="transparent-button" href="{% url 'device_edit' device.pk %}" role="button" style="margin-right: 10px;">
+            {% bs_icon 'pencil-fill' size='14px' extra_classes="start-button-icon" %}
+            <span class="button-text">edit device</span>
+          </a>
+        {% endif %}
+        <a class="transparent-button" href="{% url 'device_delete' device.pk %}" role="button">
+          {% bs_icon 'trash3-fill' size='14px' extra_classes="start-button-icon" %}
+          <span class="button-text">delete device</span>
+        </a>
+      </div>
+    {% endif %}
   </div>
   <div class="px">
-    <p>IP: {{ object.ip_address }}</p>
-    <p>status: {{ object.accepted }}</p>
-    
+    <div class="field justify-start">
+      <span class="fieldLabel">IP Address: </span>
+      <span class="fieldValue">{{ object.ip_address }}</span>
+    </div>
+    <div class="field justify-start">
+      <span class="fieldLabel">Status: </span>
+      {% if object.accepted is None %}
+        {% bs_icon 'hourglass-top' size='14px' extra_classes="pending-icon" %}
+        <span class="text-pending">Pending</span>
+      {% else %}
+        {% if object.accepted %}
+          {% bs_icon 'check-circle-fill' size='14px' extra_classes="accepted-icon" %}
+          <span class="text-accepted">Accepted</span>
+        {% else %}
+          {% bs_icon 'x-circle-fill' size='14px' extra_classes="rejected-icon" %}
+          <span class="text-rejected">Rejected</span>
+        {% endif %}
+      {% endif %}
+    </div>
+    {% if user.is_superuser %}
+      <div class="field justify-start">
+        <span class="fieldLabel">Owner: </span>
+        <span class="fieldValue">{{ object.created_by.username }}</span>
+      </div>
+    {% endif %}
+    {% if object.accepted  %}
+      <div class="ports">
+        <span class="title">
+          Device ports
+        </span>
+        <div class="container px py">
+          {% if not user.is_superuser %}
+            <button class="list-item-button row" onclick="location.href='{{ device.get_add_port_url }}'">
+              <div class="col list-col justify-center">
+                {% bs_icon 'plus-lg' size='16px' extra_classes="start-button-icon" %}
+                <span class="button-text">ADD PORT</span>
+              </div>
+            </button>
+          {% endif %}
+          {% for port in ports %}
+            <div class="list-item-button row">
+              <div class="col list-col justify-start">
+                {{ port.number }}
+              </div>
+              <div class="col list-col justify-center">
+                {% if port.accepted is None %}
+                  {% bs_icon 'hourglass-top' size='14px' extra_classes="pending-icon" %}
+                  <span class="text-pending">Pending</span>
+                {% else %}
+                  {% if port.accepted %}
+                    {% bs_icon 'check-circle-fill' size='14px' extra_classes="accepted-icon" %}
+                    <span class="text-accepted">Accepted</span>
+                  {% else %}
+                    {% bs_icon 'x-circle-fill' size='14px' extra_classes="rejected-icon" %}
+                    <span class="text-rejected">Rejected</span>
+                  {% endif %}
+                {% endif %}
+              </div>
+              {% if user.is_superuser %}
+                <div class="col list-col justify-end">
+                  {% if port.accepted is None %}
+                    <form method="POST">{% csrf_token %}
+                      <input type="hidden" name="port_id" value="{{ port.pk }}">
+                      <button type="submit" name="accept_port_button" class="icon-button" style="margin-right: 10px;">
+                        {% bs_icon 'check-circle-fill' size='16px' extra_classes="accepted-color" %}
+                      </button>
+                    </form>
+                    <form method="POST">{% csrf_token %}
+                      <input type="hidden" name="port_id" value="{{ port.pk }}">
+                      <button type="submit" name="reject_port_button" class="icon-button" style="margin-right: 10px;">
+                        {% bs_icon 'x-circle-fill' size='16px' extra_classes="rejected-color" %}
+                      </button>
+                    </form>
+                  {% endif %}
+                </div>
+              {% else %}
+                <div class="col list-col justify-end">
+                  {% if port.accepted is None %}
+                    <a class="icon-button" href="{% url 'port_edit' device.pk port.pk %}" role="button" style="margin-right: 10px;">
+                      {% bs_icon 'pencil-fill' size='16px' extra_classes="button-icon" %}
+                    </a>
+                  {% endif %}
+                  <a class="icon-button" href="{% url 'port_delete' device.pk port.pk %}" role="button">
+                    {% bs_icon 'trash3-fill' size='16px' extra_classes="button-icon" %}
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
   </div>
-  
-  
 </div>
 {% endblock content %}

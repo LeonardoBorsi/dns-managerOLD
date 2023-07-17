@@ -1,7 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock title %}
-
 {% block content %}
-<p><a class="btn btn-primary btn-lg" href="{% url 'device_list' %}" role="button">View all devices</a></p>
+  {% if user.is_superuser %}
+
+    
+    <div>
+      ADMIN
+      <p><a class="btn btn-primary btn-lg" href="{% url 'device_list' %}" role="button">View all devices</a></p>
+    </div>
+  {% else %}
+    <div>
+      USER
+    </div>
+  {% endif %}
 {% endblock content %}
+
+{% block authcontent %}
+<div class="auth-buttons-container">
+  <a href="/login" class="primary-button">
+    <span class="primary-button-text">SIGN IN</span>
+  </a>
+  <span class="or">or</span>
+  <a href="/register" class="primary-button">
+    <span class="primary-button-text">SIGN UP</span>
+  </a>
+</div>
+{% endblock authcontent %}

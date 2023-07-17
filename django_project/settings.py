@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'django_bootstrap_icons',
     'pages.apps.PagesConfig',
-    'devices.apps.DevicesConfig'
+    'devices.apps.DevicesConfig',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +136,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5" #new
 CRISPY_TEMPLATE_PACK = "bootstrap5" #new
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
